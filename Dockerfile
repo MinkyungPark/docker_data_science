@@ -18,3 +18,4 @@ RUN /bin/bash -c "cd src \
     && source activate ml \
     && pip3 install --no-cache-dir -r requirements.txt"
 RUN mkdir root/docker_data
+RUN cd src && mv train.csv ../docker_data
