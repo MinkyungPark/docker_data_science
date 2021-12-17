@@ -38,4 +38,6 @@
 - nvidia driver
 - os버전에 맞는 cuda설치, 이때 다른 버전의 cuda가 돌아가고 있으면 안된다.
 - nvidia-docker, docker nvidia-container-tookit 설치
-    - nvidia-docker 안사용시 docker run 옵션에 --gpus 혹은 NVIDIA_VISIBLE_DEVICES=, --runtime=nvidia 이용
+    - nvidia-docker 이용하지 않고, gpu 쓰는 방법
+        - docker run --gpus all[0,1..]
+        - docker run --runtime=nvidia -e NVIDIA_VISIBLE_DEVICES=all[0,1..]
