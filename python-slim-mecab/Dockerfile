@@ -26,4 +26,5 @@ WORKDIR /src/app
 EXPOSE 5000
 
 RUN pip install --upgrade pip && \
-    pip install pip install numpy scipy gensim==3.8.3 JPype1 tweepy==3.10.0 konlpy mecab-python nltk pandas psycopg2-binary pymongo scikit-learn tqdm psutil quickspacer Flask
+    pip install pip install numpy scipy gensim==3.8.3 JPype1 tweepy==3.10.0 konlpy mecab-python nltk pandas pymongo scikit-learn tqdm psutil Flask jupyterlab pybullet bym && \
+	pip3 install torch==1.10.0+cpu torchvision==0.11.1+cpu torchaudio==0.10.0+cpu -f https://download.pytorch.org/whl/cpu/torch_stable.html

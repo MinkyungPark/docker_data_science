@@ -1,0 +1,48 @@
+version: '3'
+
+services:
+  train0:
+    image: amy/pytorch
+    volumes:
+      - /mnt/sub/docker_volumes/amy-vol/_data:/workspace
+    ports:
+      - "29029:8888"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 0
+              capabilities: [gpu]
+    command: nvidia-smi
+
+  tensorboard0:
+    image: amy/pytorch
+    volumes:
+      - /mnt/sub/docker_volumes/amy-vol/_data:/workspace
+    ports:
+      - "29030:8889"
+    command: tensorboard --logdir=log/tensorboard --port=8889 --host=0.0.0.0
+
+  train1:
+    image: amy/pytorch
+    volumes:
+      - /mnt/sub/docker_volumes/amy-vol/_data:/workspace
+    ports:
+      - "29031:8890"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    command: nvidia-smi
+
+  tensorboard1:
+    image: amy/pytorch
+    volumes:
+      - /mnt/sub/docker_volumes/amy-vol/_data:/workspace
+    ports:
+      - "29032:8891"
+    command: tensorboard tensorboard --logdir=log/tensorboard --port=8891 --host=0.0.0.0
