@@ -37,7 +37,8 @@ RUN apt-get install -y grep sed dpkg && \
 
 # Install Python Packages
 RUN conda install av -c conda-forge && \
-    conda install pytorch torchvision torchaudio cudatoolkit=11.3 -c pytorch tensorflow\
+    conda install pytorch torchvision torchaudio cudatoolkit=11.3 -c pytorch && \
+	conda install tensorflow && \
     pip install tensorboard
 
 RUN mkdir -p /workspace 
