@@ -1,5 +1,5 @@
 # Base Image
-FROM nvidia/cuda:11.3.0-base-ubuntu20.04
+FROM nvidia/cuda:11.2.0-base-ubuntu20.04
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
 
 # Basic Utils
@@ -37,19 +37,15 @@ RUN apt-get install -y grep sed dpkg && \
 
 # Install Python Packages
 RUN conda install av -c conda-forge && \
-    conda install pytorch torchvision torchaudio cudatoolkit=11.3 -c pytorch && \
-	conda install tensorflow && \
 	conda install -c conda-forge jupyterlab && \
-    pip install tensorboard
+	pip install --upgrade pip && \
+    pip install tensorflow tensorboard && \
+	pip install torch==1.7.1+cu110 torchvision==0.8.2+cu110 torchaudio===0.7.2 -f https://download.pytorch.org/whl/torch_stable.html
 
 RUN mkdir -p /workspace 
 WORKDIR /workspace 
 
 # KoLNPy
-RUN pip install Jpype1 konlpy 
+RUN pip install Jpype1 tweepy==3.10.0 konlpy 
 RUN cd /workspace && \ 
 	curl -s https://raw.githubusercontent.com/konlpy/konlpy/master/scripts/mecab.sh | bash -s
-
-
-
-# konlpy 테스트 dockercompose up
