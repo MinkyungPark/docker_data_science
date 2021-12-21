@@ -1,13 +1,31 @@
 version: '3'
 
 services:
+  mongo:
+    image: mongo
+    restart: always
+    volumes:
+      - /mnt/sub/docker_volumes/amy-vol/mongo_db:/data/db
+    ports:
+      - "29019:27017"
+    environment:
+      - MONGO_USERNAME=amy
+      - MONGO_PASSWORD=************************
+      - MONGO_DATABASE=travel_ai
+
   jupyter0:
     image: amy/pytorch
     volumes:
       - /mnt/sub/docker_volumes/amy-vol/_data:/workspace
     ports:
       - "29029:8888"
+      - "28265:8265"
+    depends_on:
+      - mongo
+    links:
+      - mongo
     runtime: nvidia
+    shm_size: '63gb' # df -h /dev/shm
     command: jupyter lab --allow-root --config /workspace/jupyter_notebook_config.py
 
   tensorboard0:
@@ -17,15 +35,3 @@ services:
     ports:
       - "29030:8889"
     command: tensorboard --logdir=log/tensorboard --port=8889 --host=0.0.0.0
-  
-  mongo:
-    image: mongo
-    restart: always
-    volumes:
-      - /mnt/sub/docker_volumes/amy-vol/mongo_db:/data/db
-    ports:
-      - "29019:27017"
-    environment:
-      - MONGO_USERNAME=name
-      - MONGO_PASSWORD=passwd
-      - MONGO_DATABASE=test
